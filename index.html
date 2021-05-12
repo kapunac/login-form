@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="author" content="Ivan Kapunac">
+        <meta name="description" content="ITAcademy JavaScript Assignment">
+        <title>Assignment 3 - Website Building</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
+        <style>
+            body {
+                box-sizing: border-box;
+                font-family: sans-serif;
+                display:flex;
+                justify-content: center;
+                align-items: center;
+                height: 80vh;
+            }
+
+            #login-container {
+                width: 460px;
+                margin: 0 auto;
+            }
+
+            form label,
+            form input {
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            form input {
+                padding: 8px;
+
+            }
+
+            form label {
+                font-weight: bold;
+            }
+
+            form div {
+                margin: 16px 0px;
+            }
+            input[value='Login']{
+                background-color:rebeccapurple;
+                color:white;
+                border: none;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+
+    <body>
+
+        <div id="login-container">
+
+            <form>
+                <div>
+                    <label for="username">Username:</label>
+                    <input id="username" type="text">
+                </div>
+
+                <div>
+                    <label for="password">Password:</label>
+                    <input id="password" type="password">
+                </div>
+
+                <input type="submit" value="Login">
+            </form>
+
+        </div>
+
+
+        <script src="https://code.jquery.com/jquery-3.6.0.slim.min.js" integrity="sha256-u7e5khyithlIdTpu22PHhENmPcRdFiHRjhAuHcs05RI=" crossorigin="anonymous"></script>
+        <script>
+            const user_data = {
+                username: 'new_user',
+                password: '123456789'
+            }
+            
+            $('#login-container').submit((e)=>{
+                e.preventDefault()
+                const username_value = $('#username').val();
+                const password_value = $('#password').val();
+                const username = $('#username');
+                const password = $('#password');
+
+                    // ERROR MESSAGES
+                const invalid_username = $('<p class="error invalid_username"></p>').text('* Please, enter valid username')
+                const invalid_password = $('<p class="error invalid_password"></p>').text('* Please, enter valid password')
+                const empty_username = $('<p class="error empty_username"></p>').text('* Please, enter  username')
+                const empty_password = $('<p class="error empty_password"></p>').text('* Please, enter  password')
+
+                    // ICONS
+                const valid_icon_username = $('<i class="fas fa-check"></i>').css({'position':'absolute','transform':'translate(-170%,60%)','color':'green'});
+                const invalid_icon_username = $('<i class="fas fa-times"></i>').css({'position':'absolute','transform':'translate(-170%,60%)','color':'red'});
+                const valid_icon_password = $('<i class="fas fa-check"></i>').css({'position':'absolute','transform':'translate(-170%,60%)','color':'green'});
+                const invalid_icon_password = $('<i class="fas fa-times"></i>').css({'position':'absolute','transform':'translate(-170%,60%)','color':'red'});
+
+                // REMOVING ALL MESSAGE ERRORS BEFORE ADDING NEW ONES
+                let errors = $('.error');
+                for(let i of errors){
+                    i.remove()
+                }
+                // REMOVING ALL ICONS BEFORE ADDING NEW ONES 
+                let icons = $('.fas');
+                for(let icon of icons){
+                        icon.remove()
+                    }
+
+
+                    // CHECK USERNAME VALIDATION
+                if(username_value == user_data.username){
+                    username.css('border-color','green').after(valid_icon_username);
+                } else if(username_value.length == 0){
+                    username.css('border-color','red').after(invalid_icon_username);
+                    $('form').append(empty_username);
+                } else{
+                    username.css('border-color','red').after(invalid_icon_username);
+                    $('form').append(invalid_username);
+                }
+                    // CHECK PASSWORD VALIDATION
+                if(password_value == user_data.password){
+                    password.css('border-color','green').after(valid_icon_password)    
+                } else if(password_value.length == 0){
+                    password.css('border-color','red').after(invalid_icon_password);
+                    $('form').append(empty_password);
+                } else{
+                    password.css('border-color','red').after(invalid_icon_password);
+                    $('form').append(invalid_password);
+                }
+            });
+
+        </script>
+    </body>
+</html>
